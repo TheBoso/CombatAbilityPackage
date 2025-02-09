@@ -1,0 +1,17 @@
+{
+    "name": "CombatAbilityPackage",
+    "rootNamespace": "",
+    "references": [
+        "GUID:cbae04c664322494282a2c667fd463a2",
+        "GUID:4c3f2eb4507202243bada5dce7c03252"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

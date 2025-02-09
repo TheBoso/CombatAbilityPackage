@@ -1,0 +1,11 @@
+{
+  "name": "com.boso.combatabilities",
+  "unity": "6.0",
+  "version": "1.0.0",
+  "author": "Boso",
+  "dependencies":
+  {
+	  "com.boso.yaas" : "1.0.0",
+	  "com.boso.health" : "1.0.0"
+  }
+}
