@@ -1,5 +1,6 @@
 using System.Collections;
 using Boso.CoreHealth;
+using MalbersAnimations;
 using UnityEngine;
 
 namespace YAAS
@@ -10,10 +11,11 @@ namespace YAAS
     {
         //  Where to create the overlap sphere
         [SerializeField] private LayerMask OverlapMask;
-        [SerializeField] private int BaseDamage = 1;
+        [SerializeField] private float BaseDamage = 1;
         [SerializeField] private ParticleSystem[] OnHitParticle;
         [SerializeField] private AudioClip OnHitSound;
         [SerializeField] private float _radius = 1.0f;
+        [SerializeField] private StatID _targetStatID;
 
         public override IEnumerator PerformEffect(AbilityCaster caller)
         {
@@ -39,7 +41,7 @@ namespace YAAS
             {
                 if (hit.gameObject == caller.gameObject) continue;
 
-                if (hit.TryGetComponent(out IDamageable health))
+                if (hit.TryGetComponent(out MDamageable health))
                 {
                     if (OnHitParticle != null && OnHitParticle.Length > 0)
                     {
@@ -56,7 +58,7 @@ namespace YAAS
 
                     }
                     
-                    health.Damage(BaseDamage, caller.transform, CriticalHit: Random.value <= 0.15f);
+                    health.ReceiveDamage(_targetStatID, BaseDamage, StatOption.SubstractValue);
 
                 }
             }
