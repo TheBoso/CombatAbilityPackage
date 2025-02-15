@@ -1,6 +1,8 @@
 using System.Collections;
 using Boso.CoreHealth;
+using Boso.ResourceCore;
 using MalbersAnimations;
+using MalbersAnimations.Reactions;
 using UnityEngine;
 
 namespace YAAS
@@ -15,7 +17,9 @@ namespace YAAS
         [SerializeField] private ParticleSystem[] OnHitParticle;
         [SerializeField] private AudioClip OnHitSound;
         [SerializeField] private float _radius = 1.0f;
-        [SerializeField] private StatID _targetStatID;
+        [SerializeField] private StatElement _element;
+        [SerializeField] private StatModifier _modifier;
+        [SerializeField] private Reaction _reaction;
 
         public override IEnumerator PerformEffect(AbilityCaster caller)
         {
@@ -24,17 +28,6 @@ namespace YAAS
             Vector3 overlapPos =
                 targetObject != null ? targetObject.position  : caller.transform.position;
 
-            #if UNITY_EDITOR
-            var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            sphere.transform.localScale = Vector3.one * _radius;
-            sphere.transform.position = overlapPos;
-            Collider[] sphereCol = sphere.GetComponentsInChildren<Collider>();
-            foreach (var c in sphereCol)
-            {
-                Destroy(c);
-            }
-            Destroy(sphere, 3.0f);
-            #endif
             Collider[] colliders = Physics.OverlapSphere(overlapPos, _radius, OverlapMask);
 
             foreach (var hit in colliders)
@@ -58,8 +51,10 @@ namespace YAAS
 
                     }
                     
-                    health.ReceiveDamage(_targetStatID, BaseDamage, StatOption.SubstractValue);
-
+                    Vector3 dir = (targetObject.position - hit.transform.position).normalized;
+                    health.ReceiveDamage(dir, hit.transform.position, caller.gameObject,
+                        new StatModifier(_modifier), Random.value <= 0.15f,
+                        false, _reaction, false, _element); 
                 }
             }
 

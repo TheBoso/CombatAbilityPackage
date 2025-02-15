@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c9458fccdf2b5f4194bbdc951a32f0d, type: 3}
   m_Name: MeleeEffect
   m_EditorClassIdentifier: 
-  _offset: {x: 0, y: 0, z: 0}
-  OverlapObjectName: 
   OverlapMask:
     serializedVersion: 2
     m_Bits: 0
@@ -21,3 +19,4 @@ MonoBehaviour:
   OnHitParticle: []
   OnHitSound: {fileID: 0}
   _radius: 1
+  _stat: {fileID: 11400000, guid: d6b3e636d59a6c547a2cad40b69f4432, type: 2}

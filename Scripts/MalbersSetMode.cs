@@ -1,4 +1,5 @@
 using System.Collections;
+using MalbersAnimations;
 using MalbersAnimations.Controller;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace YAAS
     
 public class MalbersSetMode : AbilityEffect
 {
-    [SerializeField] private Mode _mode;
+    [SerializeField] private ModeID _mode;
     [SerializeField] private float _time = 0.0f;
     [SerializeField] private AbilityStatus _status = AbilityStatus.PlayOneTime;
     
