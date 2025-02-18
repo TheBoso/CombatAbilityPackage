@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using Boso.CoreHealth;
 using Boso.ResourceCore;
 using MalbersAnimations;
@@ -20,11 +21,22 @@ namespace YAAS
         [SerializeField] private StatElement _element;
         [SerializeField] private StatModifier _modifier;
         [SerializeField] private Reaction _reaction;
+        [SerializeField] private string _spawnPointName;
 
         public override IEnumerator PerformEffect(AbilityCaster caller)
         {
             //  Something needs this component in the model
-            Transform targetObject = caller.GetComponentInChildren<CombatSpawnPoint>().transform;
+            var targetObjects = caller.GetComponentsInChildren<CombatSpawnPoint>(true);
+            Transform targetObject = null;
+            if (string.IsNullOrEmpty(_spawnPointName) == false)
+            {
+                targetObject = targetObjects.FirstOrDefault(x => x.name == _spawnPointName).transform;    
+            }
+            else
+            {
+                targetObject = targetObjects[0].transform;
+            }
+            
             Vector3 overlapPos =
                 targetObject != null ? targetObject.position  : caller.transform.position;
 
