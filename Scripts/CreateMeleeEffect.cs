@@ -2,8 +2,6 @@ using System.Collections;
 using System.Linq;
 using Boso.CoreHealth;
 using Boso.ResourceCore;
-using MalbersAnimations;
-using MalbersAnimations.Reactions;
 using UnityEngine;
 
 namespace YAAS
@@ -18,9 +16,6 @@ namespace YAAS
         [SerializeField] private ParticleSystem[] OnHitParticle;
         [SerializeField] private AudioClip OnHitSound;
         [SerializeField] private float _radius = 1.0f;
-        [SerializeField] private StatElement _element;
-        [SerializeField] private StatModifier _modifier;
-        [SerializeField] private Reaction _reaction;
         [SerializeField] private string _spawnPointName;
 
         public override IEnumerator PerformEffect(AbilityCaster caller)
@@ -46,7 +41,7 @@ namespace YAAS
             {
                 if (hit.gameObject == caller.gameObject) continue;
 
-                if (hit.TryGetComponent(out MDamageable health))
+                if (hit.TryGetComponent(out BosoHealth health))
                 {
                     if (OnHitParticle != null && OnHitParticle.Length > 0)
                     {
@@ -64,9 +59,7 @@ namespace YAAS
                     }
                     
                     Vector3 dir = (targetObject.position - hit.transform.position).normalized;
-                    health.ReceiveDamage(dir, hit.transform.position, caller.gameObject,
-                        new StatModifier(_modifier), Random.value <= 0.15f,
-                        false, _reaction, false, _element); 
+                    health.TakeDamage(BaseDamage, caller.gameObject);
                 }
             }
 
