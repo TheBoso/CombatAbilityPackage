@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using Boso.CoreHealth;
 using Boso.ResourceCore;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace YAAS
@@ -59,7 +60,9 @@ namespace YAAS
                     }
                     
                     Vector3 dir = (targetObject.position - hit.transform.position).normalized;
-                    health.TakeDamage(BaseDamage, caller.gameObject);
+                    health.TakeDamageServerRpc(BaseDamage, 
+                        caller.GetComponent<NetworkBehaviour>().NetworkObjectId,
+                        Random.value <= 0.25f);
                 }
             }
 
