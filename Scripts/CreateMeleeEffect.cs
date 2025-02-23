@@ -21,6 +21,7 @@ namespace YAAS
 
         public override IEnumerator PerformEffect(AbilityCaster caller)
         {
+       
             //  Something needs this component in the model
             var targetObjects = caller.GetComponentsInChildren<CombatSpawnPoint>(true);
             Transform targetObject = null;
@@ -58,11 +59,17 @@ namespace YAAS
                         Destroy(particle, 3.0f);
 
                     }
-                    
+
                     Vector3 dir = (targetObject.position - hit.transform.position).normalized;
-                    health.TakeDamageServerRpc(BaseDamage, 
-                        caller.GetComponent<NetworkBehaviour>().NetworkObjectId,
-                        Random.value <= 0.25f);
+
+                    if (NetworkManager.Singleton.IsServer == true)
+                    {
+                        //  there is no need to run this on remotes
+
+                        health.TakeDamageServerRpc(BaseDamage,
+                            caller.GetComponent<NetworkBehaviour>().NetworkObjectId,
+                            Random.value <= 0.25f);
+                    }
                 }
             }
 
