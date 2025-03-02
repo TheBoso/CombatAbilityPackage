@@ -67,7 +67,7 @@ namespace YAAS
                         //  there is no need to run this on remotes
 
                         health.TakeDamageServerRpc(BaseDamage,
-                            caller.GetComponent<NetworkBehaviour>().NetworkObjectId,
+                            caller,
                             Random.value <= 0.25f);
                     }
                 }
