@@ -62,14 +62,11 @@ namespace YAAS
 
                     Vector3 dir = (targetObject.position - hit.transform.position).normalized;
 
-                    if (NetworkManager.Singleton.IsServer == true)
-                    {
-                        //  there is no need to run this on remotes
+                   
 
-                        health.TakeDamageServerRpc(BaseDamage,
-                            caller,
+                        health.TakeDamage(BaseDamage,
+                            caller.gameObject,
                             Random.value <= 0.25f);
-                    }
                 }
             }
 

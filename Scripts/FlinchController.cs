@@ -67,7 +67,7 @@ namespace Boso.CoreHealth
             // Example -  0.8f damageThreshold, indicating that any damage equal to or exceeding 80% of the character's
             // maximum health will be considered a 'huge amount' and trigger the flinch behavior."
             // 
-            float damageRatio = damage / _health.MaxHealth.Value;
+            float damageRatio = damage / _health.MaxHealth;
 
             // if the damage recieved is a % more than the objects
             // maxHealth % 
@@ -92,18 +92,17 @@ namespace Boso.CoreHealth
 
             _flinchRoutine = StartCoroutine(FlinchRoutine(_flinchTime, _health.LastDamagedBy));
         }
-        private IEnumerator FlinchRoutine(float time, NetworkBehaviourReference dmgSource)
+        private IEnumerator FlinchRoutine(float time, GameObject dmgSource)
         {
             OnFlinch?.Invoke();
             bool oldHuman = _inputController.CurrentHumanState;
             bool oldAI = _inputController.CurrentAIState;
             _inputController.SetAIState(false);
             _inputController.SetHumanState(false);
-            dmgSource.TryGet(out var damageSourceObject);
             float damageDirection = 0.5f;
-            if (damageSourceObject != null)
+            if (dmgSource != null)
             {
-                Vector3 direction = (damageSourceObject.transform.position - transform.position).normalized;
+                Vector3 direction = (dmgSource.transform.position - transform.position).normalized;
                 float dotRight = Vector3.Dot(transform.right, direction);  // Right (-1 to 1)
                 float dotForward = Vector3.Dot(transform.forward, direction); // Forward (-1 to 1)
 
