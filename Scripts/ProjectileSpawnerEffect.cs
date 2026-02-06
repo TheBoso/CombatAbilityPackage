@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Boso.ResourceCore;
 using YAAS;
 
 namespace RatchetCombat
@@ -290,10 +291,10 @@ namespace RatchetCombat
                 return;
 
             // Try to damage
-            IDamageable damageable = other.GetComponent<IDamageable>();
+            BosoHealth damageable = other.GetComponent<BosoHealth>();
             if (damageable != null)
             {
-                damageable.TakeDamage(damage);
+                damageable.TakeDamage(damage, shooter);
             }
 
             // Spawn impact effect

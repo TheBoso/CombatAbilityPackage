@@ -1,9 +1,17 @@
 using System.Collections;
 using UnityEngine;
+using Boso.ResourceCore;
 using YAAS;
 
 namespace RatchetCombat
 {
+    public enum AOEShape
+    {
+        Sphere,
+        Box,
+        Cylinder
+    }
+
     /// <summary>
     /// Self-contained AOE attack effect
     /// No controller dependency - pure effect
@@ -102,11 +110,11 @@ namespace RatchetCombat
                         continue;
 
                     // Damage
-                    IDamageable damageable = hit.GetComponent<IDamageable>();
+                    BosoHealth damageable = hit.GetComponent<BosoHealth>();
                     if (damageable != null)
                     {
                         Vector3 hitPoint = hit.ClosestPoint(aoePosition);
-                        damageable.TakeDamage(damage, hitPoint, caller.transform.position);
+                        damageable.TakeDamage(damage, caller.gameObject);
 
                         // Spawn hit effect
                         if (hitEffectPrefab != null)

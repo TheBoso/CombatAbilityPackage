@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Boso.ResourceCore;
 using YAAS;
 
 namespace RatchetCombat
@@ -114,7 +115,7 @@ namespace RatchetCombat
                             continue;
 
                         // Deal damage
-                        IDamageable damageable = hit.GetComponent<IDamageable>();
+                        BosoHealth damageable = hit.GetComponent<BosoHealth>();
                         if (damageable != null)
                         {
                             Vector3 hitPoint = hit.ClosestPoint(hitboxPosition);
@@ -127,7 +128,7 @@ namespace RatchetCombat
                             }
 
                             // Apply damage
-                            damageable.TakeDamage(finalDamage, hitPoint, caller.transform.position);
+                            damageable.TakeDamage(finalDamage, caller.gameObject);
 
                             // Spawn hit effects
                             if (attackData.hitEffectPrefab != null)
@@ -240,67 +241,6 @@ namespace RatchetCombat
                 {
                     Object.Instantiate(prefab, position, rotation);
                 }
-            }
-        }
-    }
-
-    /// <summary>
-    /// Static combo tracker - no MonoBehaviour coupling
-    /// Tracks combo state across multiple attacks
-    /// </summary>
-    public static class ComboTracker
-    {
-        private class ComboState
-        {
-            public int count;
-            public float lastHitTime;
-        }
-
-        private static Dictionary<int, Dictionary<string, ComboState>> combos = new Dictionary<int, Dictionary<string, ComboState>>();
-
-        public static int GetComboCount(AbilityCaster caster, string comboKey)
-        {
-            int instanceID = caster.GetInstanceID();
-
-            if (!combos.ContainsKey(instanceID))
-                combos[instanceID] = new Dictionary<string, ComboState>();
-
-            if (!combos[instanceID].ContainsKey(comboKey))
-                combos[instanceID][comboKey] = new ComboState();
-
-            ComboState state = combos[instanceID][comboKey];
-
-            // Check if combo expired (2 seconds default)
-            if (Time.time - state.lastHitTime > 2f)
-            {
-                state.count = 0;
-            }
-
-            return state.count;
-        }
-
-        public static void IncrementCombo(AbilityCaster caster, string comboKey)
-        {
-            int instanceID = caster.GetInstanceID();
-
-            if (!combos.ContainsKey(instanceID))
-                combos[instanceID] = new Dictionary<string, ComboState>();
-
-            if (!combos[instanceID].ContainsKey(comboKey))
-                combos[instanceID][comboKey] = new ComboState();
-
-            ComboState state = combos[instanceID][comboKey];
-            state.count++;
-            state.lastHitTime = Time.time;
-        }
-
-        public static void ResetCombo(AbilityCaster caster, string comboKey)
-        {
-            int instanceID = caster.GetInstanceID();
-
-            if (combos.ContainsKey(instanceID) && combos[instanceID].ContainsKey(comboKey))
-            {
-                combos[instanceID][comboKey].count = 0;
             }
         }
     }

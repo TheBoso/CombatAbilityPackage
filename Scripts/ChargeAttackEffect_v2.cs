@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using Boso.ResourceCore;
 using YAAS;
 
 namespace RatchetCombat
@@ -200,11 +202,11 @@ namespace RatchetCombat
                         if (hit.transform.root == caller.transform.root || hitThisSwing.Contains(hit))
                             continue;
 
-                        IDamageable damageable = hit.GetComponent<IDamageable>();
+                        BosoHealth damageable = hit.GetComponent<BosoHealth>();
                         if (damageable != null)
                         {
                             Vector3 hitPoint = hit.ClosestPoint(hitboxPos);
-                            damageable.TakeDamage(attack.damage, hitPoint, caller.transform.position);
+                            damageable.TakeDamage(attack.damage, caller.gameObject);
 
                             if (attack.hitEffectPrefab != null)
                                 Object.Instantiate(attack.hitEffectPrefab, hitPoint, Quaternion.identity);

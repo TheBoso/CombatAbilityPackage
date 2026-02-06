@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Boso.ResourceCore;
 using YAAS;
 
 namespace RatchetCombat
@@ -126,7 +127,7 @@ namespace RatchetCombat
                             continue;
 
                         // Deal damage
-                        IDamageable damageable = hit.GetComponent<IDamageable>();
+                        BosoHealth damageable = hit.GetComponent<BosoHealth>();
                         if (damageable != null)
                         {
                             Vector3 hitPoint = hit.ClosestPoint(hitboxPos);
@@ -139,7 +140,7 @@ namespace RatchetCombat
                             }
 
                             // Apply damage
-                            damageable.TakeDamage(finalDamage, hitPoint, caller.transform.position);
+                            damageable.TakeDamage(finalDamage, caller.gameObject);
 
                             // Effects
                             if (attack.hitEffectPrefab != null)
