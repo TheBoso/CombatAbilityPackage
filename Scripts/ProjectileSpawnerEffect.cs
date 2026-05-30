@@ -9,7 +9,6 @@ namespace RatchetCombat
     /// Pure effect for spawning projectiles
     /// Works with any weapon that shoots - blaster, bomb glove, etc.
     /// </summary>
-    [CreateAssetMenu(fileName = "NewProjectileSpawner", menuName = "Ratchet Combat/Effects/Projectile Spawner")]
     public class ProjectileSpawnerEffect : AbilityEffect
     {
         [Header("Projectile Setup")]

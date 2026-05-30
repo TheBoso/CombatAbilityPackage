@@ -7,7 +7,6 @@ using UnityEngine;
 namespace YAAS
 {
 
-    [CreateAssetMenu(fileName = "MeleeEffect", menuName = "YAAS/Combat/Melee Effect", order = 1)]
     public class CreateMeleeEffect : AbilityEffect
     {
         //  Where to create the overlap sphere
