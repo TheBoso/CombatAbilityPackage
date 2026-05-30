@@ -48,14 +48,14 @@ namespace YAAS
                     {
                         Vector3 collisionPoint = hit.ClosestPoint(overlapPos);
                         var particle =
-                            Instantiate(
+                            GameObject.Instantiate(
                                 OnHitParticle[
                                     UnityEngine.Random.Range(0, OnHitParticle.Length)],
                                 hit.transform.position, Quaternion.identity);
 
                         particle.transform.position = collisionPoint;
 
-                        Destroy(particle, 3.0f);
+                        GameObject.Destroy(particle, 3.0f);
 
                     }
 

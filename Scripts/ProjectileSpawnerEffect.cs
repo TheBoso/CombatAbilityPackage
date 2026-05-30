@@ -116,8 +116,8 @@ namespace RatchetCombat
                 // Spawn muzzle flash at this spawn point
                 if (muzzleFlashEffect != null)
                 {
-                    GameObject flash = Instantiate(muzzleFlashEffect, spawnPoint.position, spawnPoint.rotation);
-                    Destroy(flash, 2f);
+                    GameObject flash = GameObject.Instantiate(muzzleFlashEffect, spawnPoint.position, spawnPoint.rotation);
+                    GameObject.Destroy(flash, 2f);
                 }
 
                 // Spawn projectiles from this spawn point
@@ -151,7 +151,7 @@ namespace RatchetCombat
             Quaternion finalRotation = baseRotation * spreadRotation;
 
             // Spawn projectile
-            GameObject projectileObj = Instantiate(projectilePrefab, spawnPos, finalRotation);
+            GameObject projectileObj = GameObject.Instantiate(projectilePrefab, spawnPos, finalRotation);
 
             // Set up projectile component
             Projectile projectile = projectileObj.GetComponent<Projectile>();
@@ -173,7 +173,7 @@ namespace RatchetCombat
             projectile.Initialize(velocity, damage, projectileLifetime, caller.gameObject);
 
             // Destroy after lifetime
-            Destroy(projectileObj, projectileLifetime);
+            GameObject.Destroy(projectileObj, projectileLifetime);
         }
 
         private Transform[] FindSpawnPoints(AbilityCaster caller)
