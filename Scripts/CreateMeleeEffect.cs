@@ -23,11 +23,15 @@ namespace YAAS
             //  Something needs this component in the model
             var targetObjects = caller.GetComponentsInChildren<CombatSpawnPoint>(true);
             Transform targetObject = null;
-            if (string.IsNullOrEmpty(_spawnPointName) == false)
+            if (targetObjects == null)
+            {
+                targetObject = caller.transform;   
+            }
+             if (string.IsNullOrEmpty(_spawnPointName) == false)
             {
                 targetObject = targetObjects.FirstOrDefault(x => x.name == _spawnPointName).transform;    
             }
-            else
+            else if(targetObjects != null && targetObjects.Length > 0)
             {
                 targetObject = targetObjects[0].transform;
             }
@@ -58,7 +62,7 @@ namespace YAAS
 
                     }
 
-                    Vector3 dir = (targetObject.position - hit.transform.position).normalized;
+                 //   Vector3 dir = (targetObject.position - hit.transform.position).normalized;
 
                    
 
