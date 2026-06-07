@@ -22,6 +22,7 @@ public class DeathEffect : AbilityEffect
           var emote = caller.GetComponent<EmoteController>();
           emote.TryPlay(deathClip, () => isAnimDone = true );
           yield return new WaitUntil(() => isAnimDone);
+          GameObject.Destroy(caller.gameObject);
       }
     }
 }

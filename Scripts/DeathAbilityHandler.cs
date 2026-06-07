@@ -12,7 +12,7 @@ public class DeathAbilityHandler : MonoBehaviour
    private void Awake()
    {
       _hp = GetComponent<BosoHealth>();
-      _hp.OnDeath.AddListener(OnDeath);
+      _hp.A_OnDeath.AddListener(OnDeath);
    }
 
    private void OnDeath()
@@ -28,7 +28,7 @@ public class DeathAbilityHandler : MonoBehaviour
    {
       if (_hp != null)
       {
-         _hp.OnDeath.RemoveListener(OnDeath);
+         _hp.A_OnDeath.RemoveListener(OnDeath);
       }
    }
 }
